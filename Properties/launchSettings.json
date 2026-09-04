@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PigeonBotDotnet": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
