@@ -12,9 +12,10 @@ RUN dotnet publish -c Release -o /app/publish \
     -p:PublishTrimmed=true
 
 # Final Stage: Bare dependencies image (no full .NET runtime needed)
-FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled AS final
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled-extra AS final
 WORKDIR /app
 
 COPY --from=build /app/publish .
 
+USER root
 ENTRYPOINT ["./PigeonBotDotnet"]
