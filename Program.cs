@@ -4,16 +4,25 @@ using Microsoft.Extensions.Hosting;
 using NetCord.Hosting.Gateway;
 using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
+using System.Reflection;
 
-var builder = Host.CreateApplicationBuilder(args);
+namespace PigeonBotDotnet;
 
-builder.Services
-    .AddScoped<ILiteDatabase>(sp => new LiteDatabase("data/pigeon-bot.db"))
-    .AddDiscordGateway(options => options.Intents = NetCord.Gateway.GatewayIntents.Guilds | NetCord.Gateway.GatewayIntents.GuildMessages | NetCord.Gateway.GatewayIntents.MessageContent)
-    .AddApplicationCommands();
+public class Program
+{
+    public static async Task Main(string[] args)
+    {
+        var builder = Host.CreateApplicationBuilder(args);
 
-var host = builder.Build();
+        builder.Services
+            .AddScoped<ILiteDatabase>(sp => new LiteDatabase("data/pigeon-bot.db"))
+            .AddDiscordGateway(options => options.Intents = NetCord.Gateway.GatewayIntents.Guilds | NetCord.Gateway.GatewayIntents.GuildMessages | NetCord.Gateway.GatewayIntents.MessageContent)
+            .AddApplicationCommands();
 
-host.AddModules(typeof(Program).Assembly);
+        var host = builder.Build();
 
-await host.RunAsync();
+        host.AddModules(Assembly.GetExecutingAssembly());
+
+        await host.RunAsync();
+    }
+}
