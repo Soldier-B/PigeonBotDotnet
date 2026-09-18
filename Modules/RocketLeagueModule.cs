@@ -5,14 +5,8 @@ using System.Security.Cryptography;
 
 namespace PigeonBotDotnet.Modules;
 
-public class RocketLeageModule : ApplicationCommandModule<ApplicationCommandContext>
+public class RocketLeageModule(ILiteDatabase db) : ApplicationCommandModule<ApplicationCommandContext>
 {
-	private readonly ILiteDatabase _db;
-
-	public RocketLeageModule(ILiteDatabase db)
-	{
-		_db = db;
-	}
 
 	[SlashCommand("lineup", "Pick a random Boomin' Birds lineup.")]
 	public async Task<string> GetRandomLineup()
@@ -66,7 +60,7 @@ public class RocketLeageModule : ApplicationCommandModule<ApplicationCommandCont
 
 	private ILiteCollection<Teammate> GetTeam()
 	{
-		return _db.GetCollection<Teammate>("Team");
+		return db.GetCollection<Teammate>("Team");
 	}
 
 	private async Task<string> GetDisplayName(ulong snowflake)
