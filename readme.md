@@ -1,5 +1,9 @@
-# docker build command
-docker build -t pigeon-bot-dotnet .
+### Docker commands
 
-# docker save image
-docker save -o pigeon-bot-dotnet.tar pigeon-bot-dotnet
+- **build docker image**: `docker build -t pigeon-bot-dotnet .`
+- **package docker image**: `docker save -o pigeon-bot-dotnet.tar pigeon-bot-dotnet`
+
+### Container config
+
+- map /app/data path
+- set Discord__Token and Discord__GuildId variables
